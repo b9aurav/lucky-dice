@@ -64,6 +64,7 @@
 html,
 body {
   padding: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('/public/bg.jpg');
   margin: 0;
   font-family:
     -apple-system,
@@ -84,7 +85,7 @@ body {
 }
 
 main {
-  padding: 5rem 0;
+  padding: 0 0;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -113,4 +114,18 @@ input[type='button'] {
   font-size: 24px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+@keyframes rollDice {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  25% { transform: rotateX(-90deg) rotateY(45deg); }
+  50% { transform: rotateX(-180deg) rotateY(90deg); }
+  75% { transform: rotateX(-270deg) rotateY(135deg); }
+  100% { transform: rotateX(-360deg) rotateY(180deg); }
+}
+
+.dice {
+  animation: rollDice 1s ease-out;
+  display: inline-block;
+  perspective: 600px;
 }
