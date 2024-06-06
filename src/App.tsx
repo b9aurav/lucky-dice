@@ -23,7 +23,7 @@ const diceRollAnimation = keyframes`
 `;
 
 function App() {
-  const [points, setPoints] = useState(400);
+  const [points, setPoints] = useState(5000);
   const [bet, setBet] = useState(100);
   const [choice, setChoice] = useState("7 up");
   const [diceResult, setDiceResult] = useState([0, 0]);
