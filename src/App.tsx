@@ -90,6 +90,7 @@ function App() {
           result,
           points,
           bet,
+          lucky7: choice === "Lucky 7",
         })
         .then((response) => {
           if (response.data) {
