@@ -13,6 +13,7 @@ import { useState } from "react";
 import styled from "@mui/system/styled";
 import axios from "axios";
 import { Autorenew } from "@mui/icons-material";
+import Loader from "./component/Loader";
 
 const diceRollAnimation = keyframes`
 0% { transform: rotateX(0deg) rotateY(0deg); }
@@ -29,6 +30,7 @@ function App() {
   const [diceResult, setDiceResult] = useState([0, 0]);
   const [gameResult, setGameResult] = useState("");
   const [rolling, setRolling] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const AnimatedBox = styled(Box)(() => ({
     animation: rolling ? `${diceRollAnimation} 1s ease-out` : "none",
@@ -37,7 +39,11 @@ function App() {
   }));
 
   const rollDice = async () => {
+    diceResult[0] = 0;
+    diceResult[1] = 0;
+    setGameResult("");
     try {
+      setIsLoading(true);
       setRolling(true);
       await axios
         .post(import.meta.env.VITE_API_URL + "rollDice")
@@ -53,6 +59,7 @@ function App() {
     } catch (error) {
       console.error("Error rolling dice:", error);
       setRolling(false);
+      setIsLoading(false);
     }
   };
 
@@ -72,6 +79,7 @@ function App() {
         });
     } catch (error) {
       console.error("Error getting game result:", error);
+      setIsLoading(false);
     }
   };
 
@@ -86,10 +94,12 @@ function App() {
         .then((response) => {
           if (response.data) {
             setPoints(response.data.points);
+            setIsLoading(false);
           }
         });
     } catch (error) {
       console.error("Error calculating points:", error);
+      setIsLoading(false);
     }
   };
 
@@ -209,6 +219,7 @@ function App() {
           )}
         </Box>
       </Box>
+      {isLoading && <Loader />}
       {points < bet && (
         <Alert variant="filled" severity="error">
           No enough points to bet! Please reset points.
